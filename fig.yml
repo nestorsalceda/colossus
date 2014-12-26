@@ -1,8 +1,8 @@
 downloads:
   image: debian
   volumes:
-    -  "/mnt/storage/volumes/downloads"
-  command: /bin/echo
+    -  "/downloads:/mnt/storage/volumes/downloads"
+  command: true
 
 transmission:
   build: transmission
