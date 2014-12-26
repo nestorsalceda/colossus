@@ -1,0 +1,12 @@
+downloads:
+  image: debian
+  volumes:
+    -  "/mnt/storage/volumes/downloads"
+  command: /bin/echo
+
+transmission:
+  build: transmission
+  volumes_from:
+    - downloads
+  ports:
+    - "9091:9091"
