@@ -1,7 +1,7 @@
 downloads:
   image: debian
   volumes:
-    -  "/downloads:/mnt/storage/volumes/downloads"
+    -  "/mnt/storage/volumes/downloads:/downloads"
   command: true
 
 transmission:
