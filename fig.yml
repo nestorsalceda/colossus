@@ -1,9 +1,3 @@
-transmission_daemon:
-  image: debian
-  volumes:
-    -  "/mnt/storage/volumes/transmission-daemon:/etc/transmission-daemon"
-  command: true
-
 downloads:
   image: debian
   volumes:
@@ -13,7 +7,8 @@ downloads:
 transmission:
   build: transmission
   volumes_from:
-    - transmission_daemon
     - downloads
+  volumes:
+    - "/mnt/storage/volumes/transmission-daemon:/etc/transmission-daemon"
   ports:
     - "9091:9091"
