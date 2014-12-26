@@ -6,9 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y transmission-daemon
 
-RUN MKDIR /downloads/transmission
-COPY settings.json /downloads/transmission/
+COPY settings.json /etc/transmission-daemon/
 
 EXPOSE 9091
-CMD ["transmission-daemon", "-f", "-g", "/downloads/transmission"]
+CMD ["transmission-daemon", "-f", "-g", "/etc/transmission-daemon"]
 
