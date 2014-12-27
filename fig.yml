@@ -17,6 +17,7 @@ minidlna:
   build: minidlna
   volumes_from:
     - downloads
+  net: "host"
   ports:
     - "8200:8200"
-    - "1900/udp:1900/udp"
+    - "1900:1900/udp"
