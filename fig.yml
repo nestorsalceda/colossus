@@ -12,3 +12,10 @@ transmission:
     - "/mnt/storage/volumes/transmission-daemon:/etc/transmission-daemon"
   ports:
     - "9091:9091"
+
+minidlna:
+  build: minidlna
+  volumes_from:
+    - downloads
+  ports:
+    - "8200:8200"
