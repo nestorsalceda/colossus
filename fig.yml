@@ -21,3 +21,9 @@ minidlna:
   ports:
     - "8200:8200"
     - "1900:1900/udp"
+
+munin:
+  build: munin
+  net: "host"
+  ports:
+    - "80:80"
