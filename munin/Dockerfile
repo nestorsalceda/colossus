@@ -15,9 +15,6 @@ RUN (mkdir -p /var/run/munin && chown -R munin:munin /var/run/munin)
 
 ADD run.sh /usr/local/bin/run
 
-VOLUME /var/lib/munin
-VOLUME /var/log/munin
-
 EXPOSE 80
 
 CMD ["/usr/local/bin/run"]

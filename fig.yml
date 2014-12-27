@@ -25,5 +25,8 @@ minidlna:
 munin:
   build: munin
   net: "host"
+  volumes:
+    - "/mnt/storage/volumes/munin:/var/lib/munin"
+    - "/mnt/storage/volumes/munin-logs:/var/log/munin"
   ports:
     - "80:80"
