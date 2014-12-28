@@ -4,6 +4,24 @@ downloads:
     -  "/mnt/storage/volumes/downloads:/downloads"
   command: true
 
+pictures:
+  image: debian
+  volumes:
+    -  "/mnt/storage/volumes/pictures:/pictures"
+  command: true
+
+videos:
+  image: debian
+  volumes:
+    -  "/mnt/storage/volumes/videos:/videos"
+  command: true
+
+videos:
+  image: debian
+  volumes:
+    -  "/mnt/storage/volumes/music:/music"
+  command: true
+
 transmission:
   build: transmission
   volumes_from:
@@ -17,6 +35,8 @@ minidlna:
   build: minidlna
   volumes_from:
     - downloads
+    - pictures
+    - videos
   net: "host"
   ports:
     - "8200:8200"
