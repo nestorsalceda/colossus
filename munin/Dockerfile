@@ -31,7 +31,6 @@ RUN ln -s /usr/share/munin/plugins/smart_ /etc/munin/plugins/smart_sdd
 
 RUN ln -s /usr/share/munin/plugins/sensors_ /etc/munin/plugins/sensors_temp
 RUN ln -s /usr/share/munin/plugins/sensors_ /etc/munin/plugins/sensors_fan
-RUN ln -s /usr/share/munin/plugins/sensors_ /etc/munin/plugins/sensors_volt
 
 EXPOSE 80
 
