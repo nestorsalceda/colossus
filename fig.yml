@@ -16,7 +16,7 @@ videos:
     -  "/mnt/storage/volumes/videos:/videos"
   command: true
 
-videos:
+music:
   image: debian
   volumes:
     -  "/mnt/storage/volumes/music:/music"
@@ -37,6 +37,7 @@ minidlna:
     - downloads
     - pictures
     - videos
+    - music
   net: "host"
   ports:
     - "8200:8200"
