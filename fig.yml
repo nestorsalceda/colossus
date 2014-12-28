@@ -30,3 +30,4 @@ munin:
     - "/mnt/storage/volumes/munin-logs:/var/log/munin"
   ports:
     - "80:80"
+  privileged: true
