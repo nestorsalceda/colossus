@@ -9,6 +9,7 @@ RUN apt-get install -y munin
 RUN apt-get install -y apache2
 RUN apt-get install -y smartmontools
 RUN apt-get install -y lm-sensors i2c-tools
+RUN apt-get install -y python
 
 RUN (cp /etc/munin/apache.conf /etc/apache2/sites-enabled/default)
 RUN (sed -i 's/^Alias.*/Alias \/ \/var\/cache\/munin\/www\//g' /etc/apache2/sites-enabled/default)
@@ -20,6 +21,7 @@ ADD run.sh /usr/local/bin/run
 RUN chown munin:munin /var/lib/munin
 RUN chown munin:munin /var/log/munin
 
+ADD hddtemp_smartctl /etc/munin/plugin-conf.d/hddtemp_smartctl
 RUN ln -s /usr/share/munin/plugins/hddtemp_smartctl /etc/munin/plugins/hddtemp_smartctl
 
 RUN ln -s /usr/share/munin/plugins/smart_ /etc/munin/plugins/smart_sda
