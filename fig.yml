@@ -52,3 +52,12 @@ munin:
   ports:
     - "80:80"
   privileged: true
+
+dockerui:
+  image: dockerui/dockerui
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  ports:
+    - "9000:9000"
+  privileged: true
+
