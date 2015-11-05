@@ -6,15 +6,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y cron
 RUN apt-get install -y munin
-RUN apt-get install -y apache2
+RUN apt-get install -y apache2 libcgi-fast-perl libapache2-mod-fcgid
 RUN apt-get install -y smartmontools
 RUN apt-get install -y lm-sensors i2c-tools
 RUN apt-get install -y python
 
-RUN (cp /etc/munin/apache.conf /etc/apache2/sites-enabled/default)
-RUN (sed -i 's/^Alias.*/Alias \/ \/var\/cache\/munin\/www\//g' /etc/apache2/sites-enabled/default)
-RUN (sed -i 's/Allow from localhost.*/Allow from all/g' /etc/apache2/sites-enabled/default)
+RUN (cp /etc/munin/apache24.conf /etc/apache2/sites-enabled/000-default.conf)
+RUN (sed -i 's/^Alias.*/Alias \/ \/var\/cache\/munin\/www\//g' /etc/apache2/sites-enabled/000-default.conf)
+RUN (sed -i 's/Allow from localhost.*/Allow from all/g' /etc/apache2/sites-enabled/000-default.conf)
 RUN (mkdir -p /var/run/munin && chown -R munin:munin /var/run/munin)
+RUN (a2enmod fcgid)
 
 ADD run.sh /usr/local/bin/run
 
