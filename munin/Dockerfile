@@ -31,6 +31,8 @@ RUN ln -s /usr/share/munin/plugins/smart_ /etc/munin/plugins/smart_sdd
 
 RUN ln -s /usr/share/munin/plugins/sensors_ /etc/munin/plugins/sensors_temp
 
+RUN ln -s /usr/share/munin/plugins/ping_ /etc/munin/plugins/ping_8.8.8.8
+
 EXPOSE 80
 
 CMD ["/usr/local/bin/run"]
