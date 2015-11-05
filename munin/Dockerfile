@@ -13,8 +13,10 @@ RUN apt-get install -y python
 
 RUN (cp /etc/munin/apache24.conf /etc/apache2/sites-enabled/000-default.conf)
 RUN (sed -i 's/^Alias.*/Alias \/ \/var\/cache\/munin\/www\//g' /etc/apache2/sites-enabled/000-default.conf)
-RUN (sed -i 's/Allow from localhost.*/Allow from all/g' /etc/apache2/sites-enabled/000-default.conf)
+RUN (sed -i 's/Require local/Require all granted/g' /etc/apache2/sites-enabled/000-default.conf)
 RUN (mkdir -p /var/run/munin && chown -R munin:munin /var/run/munin)
+RUN (mkdir -p /var/log/munin && chown -R munin:munin /var/log/munin)
+RUN (mkdir -p /var/lib/munin && chown -R munin:munin /var/lib/munin)
 
 ADD run.sh /usr/local/bin/run
 
