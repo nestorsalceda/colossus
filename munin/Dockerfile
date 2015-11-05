@@ -15,7 +15,6 @@ RUN (cp /etc/munin/apache24.conf /etc/apache2/sites-enabled/000-default.conf)
 RUN (sed -i 's/^Alias.*/Alias \/ \/var\/cache\/munin\/www\//g' /etc/apache2/sites-enabled/000-default.conf)
 RUN (sed -i 's/Allow from localhost.*/Allow from all/g' /etc/apache2/sites-enabled/000-default.conf)
 RUN (mkdir -p /var/run/munin && chown -R munin:munin /var/run/munin)
-RUN (a2enmod fcgid)
 
 ADD run.sh /usr/local/bin/run
 
