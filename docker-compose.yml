@@ -2,25 +2,25 @@ downloads:
   image: debian
   volumes:
     -  "/mnt/storage/volumes/downloads:/downloads"
-  command: true
+  command: "true"
 
 pictures:
   image: debian
   volumes:
     -  "/mnt/storage/volumes/pictures:/pictures"
-  command: true
+  command: "true"
 
 videos:
   image: debian
   volumes:
     -  "/mnt/storage/volumes/videos:/videos"
-  command: true
+  command: "true"
 
 music:
   image: debian
   volumes:
     -  "/mnt/storage/volumes/music:/music"
-  command: true
+  command: "true"
 
 transmission:
   build: transmission
