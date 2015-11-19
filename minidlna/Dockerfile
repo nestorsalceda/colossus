@@ -10,4 +10,4 @@ COPY minidlna.conf /etc/minidlna.conf
 
 EXPOSE 1900/udp
 EXPOSE 8200
-CMD ["minidlna", "-d"]
+CMD ["minidlnad", "-d"]
