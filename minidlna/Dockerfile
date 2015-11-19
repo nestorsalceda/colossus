@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:wheezy
 MAINTAINER Néstor Salceda <nestor@nestorsalceda.com>
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -10,4 +10,4 @@ COPY minidlna.conf /etc/minidlna.conf
 
 EXPOSE 1900/udp
 EXPOSE 8200
-CMD ["minidlnad", "-d"]
+CMD ["minidlna", "-d"]
