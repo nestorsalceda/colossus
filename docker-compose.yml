@@ -31,8 +31,8 @@ transmission:
   ports:
     - "9091:9091"
 
-minidlna:
-  build: minidlna
+rygel:
+  build: rygel
   volumes_from:
     - downloads
     - pictures
@@ -40,7 +40,7 @@ minidlna:
     - music
   net: "host"
   ports:
-    - "8200:8200"
+    - "8000:8000"
     - "1900:1900/udp"
 
 munin:
