@@ -8,3 +8,7 @@ RUN apt-get install -y --force-yes rygel gstreamer1.0-plugins-base \
        gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
        gstreamer1.0-plugins-ugly gstreamer1.0-libav
 
+
+COPY rygel.conf /etc/rygel.conf
+EXPOSE 8000/tcp 1900/udp
+CMD ["/usr/bin/rygel"]
