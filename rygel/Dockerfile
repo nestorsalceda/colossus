@@ -13,6 +13,6 @@ RUN apt-get update \
     gstreamer1.0-libav \
     && rm -fr /var/lib/apt/lists/*
 
-COPY rygel.conf /etc/rygel.conf
+COPY rygel.conf /root/.config/
 EXPOSE 8000/tcp 1900/udp
 CMD ["/usr/bin/rygel"]
