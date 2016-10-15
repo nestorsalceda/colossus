@@ -1,0 +1,59 @@
+---
+- hosts: nas
+  vars:
+    volumes:
+      - { name: "media", size: "1.5T" }
+      - { name: "backups", size: "2.5T" }
+      - { name: "downloads", size: "100%FREE"}
+
+  tasks:
+  - name: install latest kernel from backports
+    apt:
+      pkg="linux-image-amd64"
+      default_release={{ansible_distribution_release}}-backports
+      state=latest
+
+  - name: install extra packages
+    apt:
+      pkg="{{ item }}"
+      state=present
+    with_items:
+      - tmux
+      - zsh
+
+  - name: install hard disk tools
+    apt:
+      pkg="{{ item }}"
+      state=present
+    with_items:
+      - smartmontools
+      - hddtemp
+      - sysstat
+
+#  - name: create logical volumes
+#    lvol:
+#      lv="{{ item.name }}"
+#      size="{{ item.size }}"
+#      vg="colossus-vg"
+#      state="present"
+#    with_items: "{{ volumes }}"
+
+  - name: create filesystems
+    filesystem:
+      dev="/dev/colossus-vg/{{ item.name }}"
+      fstype="ext4"
+      opts="-L {{ item.name }} -m 0.01 -b 4096 -E stride=128,stripe-width=512"
+      resizefs=yes
+    with_items: "{{ volumes }}"
+
+  - name: mount filesystems
+    mount:
+      name="/srv/{{ item.name }}"
+      src="/dev/colossus-vg/{{ item.name }}"
+      fstype="ext4"
+      state=mounted
+    with_items: "{{ volumes }}"
+
+  roles:
+    - munin
+    - nginx

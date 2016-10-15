@@ -1,0 +1,6 @@
+---
+- name: configure debian backports
+  apt_repository:
+    repo="deb http://http.debian.net/debian {{ ansible_distribution_release }}-backports main"
+    filename='backports'
+    state=present

@@ -1,0 +1,34 @@
+---
+munin_node_plugins:
+  - name: hddtemp
+  - name: iostat
+  - name: iostat_ios
+  - name: smart_sda
+    plugin: smart_
+  - name: smart_sdb
+    plugin: smart_
+  - name: smart_sdc
+    plugin: smart_
+  - name: smart_sdd
+    plugin: smart_
+  - name: sensors_temp
+    plugin: sensors_
+  - name: ping_8.8.8.8
+    plugin : ping_
+
+munin_node_plugins_config: {
+  "hddtemp": {
+    "user": "root",
+    "env.drives": "sda sdb sdc sdd"
+  }
+}
+
+munin_hosts:
+  - name: colossus.local
+    address: 127.0.0.1
+
+nginx_sites:
+   - server_name: munin.huridata.org
+     site_type: "http"
+     root: /var/cache/munin/www
+     locations: []

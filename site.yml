@@ -1,0 +1,20 @@
+---
+- hosts: all
+  roles:
+    - backports
+    - apt
+    #- fail2ban
+    - sudo
+    - mivok0.users
+    #- ssh
+    #- firewall
+    - jnv.unattended-upgrades
+    #- exim
+    - munin-node
+    #- logwatch
+    #- rkhunter
+    #- chkrootkit
+    - ntp
+    - base
+
+- include: nas.yml
