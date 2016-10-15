@@ -41,7 +41,7 @@
   - name: create filesystems
     filesystem:
       dev="/dev/colossus-vg/{{ item.name }}"
-      fstype="ext4"
+      fstype=ext4
       opts="-L {{ item.name }} -m 0.01 -b 4096 -E stride=128,stripe-width=512"
       resizefs=yes
     with_items: "{{ volumes }}"
@@ -50,7 +50,7 @@
     mount:
       name="/srv/{{ item.name }}"
       src="/dev/colossus-vg/{{ item.name }}"
-      fstype="ext4"
+      fstype=ext4
       state=mounted
     with_items: "{{ volumes }}"
 
