@@ -1,0 +1,27 @@
+---
+- name: install package
+  apt:
+    pkg=transmission-daemon
+    state=present
+
+- name: stop service
+  service:
+    name=transmission-daemon
+    state=stopped
+
+- name: ensure tranmission can write in downloads directory
+  file:
+    path=/srv/downloads
+    owner=debian-transmission
+    group=debian-transmission
+    state=directory
+
+- name: configure
+  template:
+    src=settings.json.j2
+    dest=/etc/transmission-daemon/settings.json
+
+- name: start service
+  service:
+    name=transmission-daemon
+    state=started
