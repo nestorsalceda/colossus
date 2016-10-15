@@ -5,6 +5,7 @@
     pkg={{ item }}
     state=present
   with_items:
+    - rdiff-backup
     - backupninja
     - duplicity
 

@@ -66,8 +66,16 @@
       fstype=ext4
       state=mounted
 
+  - name: ensure nestor can write on backups
+    file:
+      path=/srv/backups
+      owner=nestor
+      group=nestor
+      state=directory
+
   roles:
     - munin
     - nginx
     - rygel
     - transmission
+    - backupninja
