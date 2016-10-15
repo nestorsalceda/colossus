@@ -1,2 +1,0 @@
-[hddtemp_smartctl]
-env.drives sda sdb sdc sdd
