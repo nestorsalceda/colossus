@@ -54,6 +54,18 @@
       state=mounted
     with_items: "{{ volumes }}"
 
+  - name: create external mount point
+    file:
+      path=/mnt/external
+      state=directory
+
+  - name: mount external drive
+    mount:
+      name=/mnt/external
+      src=/dev/sdf1
+      fstype=ext4
+      state=mounted
+
   roles:
     - munin
     - nginx
