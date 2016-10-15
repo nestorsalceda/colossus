@@ -8,6 +8,7 @@ users:
   - username: nestor
     name: Néstor Salceda
     uid: 1000
+    shell: /bin/zsh
     groups: ["sudo"]
     password: "$6$Os1eTlxrg9wT$ONQiMB0dLkformI61kl6THLEwjFGe4Q20Z4/D07/dpelA3LLUbaPBAgzWFJHYjVCkR8XCPf1mz0NkEk9SpEun1"
 
