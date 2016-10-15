@@ -1,0 +1,7 @@
+---
+rygel_music_directory: /srv/media/music
+rygel_video_directory: /srv/media/videos
+rygel_picture_directory: /srv/media/pictures
+
+rygel_urls:
+  - /srv/downloads

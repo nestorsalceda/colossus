@@ -1,0 +1,5 @@
+---
+- name: restart rygel
+  service:
+    name=rygel
+    state=restarted

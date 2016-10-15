@@ -1,0 +1,21 @@
+---
+- name: install package
+  apt:
+    pkg=rygel
+    state=present
+
+- name: configure
+  template:
+    src=rygel.conf.j2
+    dest=/etc/rygel.conf
+  notify: restart rygel
+
+- name: install rygel service
+  copy:
+    src=rygel.service
+    dest=/etc/systemd/system/rygel.service
+
+- name: start service
+  service:
+    name=rygel
+    state=started
