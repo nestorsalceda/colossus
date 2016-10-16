@@ -1,11 +1,5 @@
 ---
 - hosts: nas
-  vars:
-    volumes:
-      - { name: "media", size: "1.5T" }
-      - { name: "backups", size: "2.5T" }
-      - { name: "downloads", size: "100%FREE"}
-
   tasks:
   - name: install latest kernel from backports
     apt:
@@ -29,42 +23,6 @@
       - smartmontools
       - hddtemp
       - sysstat
-
-#  - name: create logical volumes
-#    lvol:
-#      lv="{{ item.name }}"
-#      size="{{ item.size }}"
-#      vg="colossus-vg"
-#      state="present"
-#    with_items: "{{ volumes }}"
-
-  - name: create filesystems
-    filesystem:
-      dev="/dev/colossus-vg/{{ item.name }}"
-      fstype=ext4
-      opts="-L {{ item.name }} -m 0.01 -b 4096 -E stride=128,stripe-width=512"
-      resizefs=yes
-    with_items: "{{ volumes }}"
-
-  - name: mount filesystems
-    mount:
-      name="/srv/{{ item.name }}"
-      src="/dev/colossus-vg/{{ item.name }}"
-      fstype=ext4
-      state=mounted
-    with_items: "{{ volumes }}"
-
-  - name: create external mount point
-    file:
-      path=/mnt/external
-      state=directory
-
-  - name: mount external drive
-    mount:
-      name=/mnt/external
-      src=/dev/sdf1
-      fstype=ext4
-      state=mounted
 
   - name: ensure nestor can write on backups
     file:
