@@ -1,0 +1,66 @@
+- hosts: nas
+  vars:
+    volumes:
+      - { name: "media", size: "1.5T", device: /dev/colossus-vg/media }
+      - { name: "backups", size: "2.5T", device: /dev/mapper/backups }
+      - { name: "downloads", size: "100%FREE", device: /dev/colossus-vg/downloads}
+
+  vars_prompt:
+    - name: backup_crypt_password
+      prompt: "Backup encryption password"
+      private: yes
+
+  tasks:
+    - name: install cryptsetup
+      apt:
+        pkg=cryptsetup
+        state=present
+
+  - name: create logical volumes
+    lvol:
+      lv="{{ item.name }}"
+      size="{{ item.size }}"
+      vg="colossus-vg"
+      state="present"
+    with_items: "{{ volumes }}"
+
+    - name: encrypt backups partition
+      shell: "echo {{ backup_crypt_password}} | cryptsetup luksFormat --batch-mode -c aes-xts-plain64 -s 512 /dev/colossus-vg/backups"
+
+    - name: open encrypted backups partition
+      shell: "echo {{ backup_crypt_password }} | cryptsetup luksOpen /dev/colossus-vg/backups backups"
+
+    - name: create filesystems
+      filesystem:
+        dev="{{ item.device }}"
+        fstype=ext4
+        opts="-L {{ item.name }} -m 0.01 -b 4096 -E stride=128,stripe-width=512"
+        resizefs=yes
+      with_items: "{{ volumes }}"
+
+    - name: mount filesystems
+      mount:
+        name="/srv/{{ item.name }}"
+        src="{{ item.device }}"
+        fstype=ext4
+        state=mounted
+      with_items: "{{ volumes }}"
+
+    - name: add backups to crypttab
+      crypttab:
+        name=backups
+        backing_device=/dev/colossus-vg/backups
+        state=present
+
+    - name: create external mount point
+      file:
+        path=/mnt/external
+        state=directory
+
+    - name: mount external drive
+      mount:
+        name=/mnt/external
+        src=/dev/sdf1
+        fstype=ext4
+        state=mounted
+
