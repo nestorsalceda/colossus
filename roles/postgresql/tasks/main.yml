@@ -5,6 +5,7 @@
     state=present
   with_items:
     - postgresql
+    - libpq-dev
     - python-psycopg2
     - libdbd-pg-perl
 
@@ -22,7 +23,7 @@
 - name: configure server
   template:
     src=postgresql.conf.j2
-    dest=/etc/postgresql/9.4/main/postgresql.conf
+    dest=/etc/postgresql/9.6/main/postgresql.conf
   notify: postgresql restart
 
 - name: start service
