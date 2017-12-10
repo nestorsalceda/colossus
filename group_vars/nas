@@ -27,8 +27,84 @@ munin_hosts:
   - name: colossus.local
     address: 127.0.0.1
 
+php_extra_modules:
+   - php-pgsql
+   - php-zip
+   - php-gd
+   - php-xml
+   - php-mbstring
+   - php-curl
+
+nextcloud_data_dir: '/srv/media/nextcloud'
+
 nginx_sites:
    - server_name: munin.huridata.org
      site_type: "http"
+     listen: 8000
      root: /var/cache/munin/www
      locations: []
+
+   - server_name: nextcloud
+     site_type: "http"
+     root: /var/www/nextcloud
+     "add_header X-Content-Type-Options": nosniff
+     "add_header X-XSS-Protection": '"1; mode=block"'
+     "add_header X-Robots-Tag": none
+     "add_header X-Download-Options": noopen
+     "add_header X-Permitted-Cross-Domain-Policies": none
+
+     client_max_body_size: "512M"
+     fastcgi_buffers: "64 4K"
+
+     locations:
+      - url: /
+        directives:
+          - rewrite: "^ /index.php$uri"
+
+      - url: "= /robots.txt"
+        directives:
+          - allow: "all"
+          - log_not_found: "off"
+          - access_log: "off"
+
+      - url: "= /.well-known/carddav"
+        directives:
+          - return: "301 $scheme://$host/remote.php/dav"
+
+      - url: "= /.well-known/caldav"
+        directives:
+          - return: "301 $scheme://$host/remote.php/dav"
+
+      - url: "~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/"
+        directives:
+          - deny: all
+
+      - url: "~ ^/(?:\\.|autotest|occ|issue|indie|db_|console)"
+        directives:
+          - deny: all
+
+      - url: "~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updater/.+|ocs-provider/.+)\\.php(?:$|/)"
+        directives:
+          - fastcgi_split_path_info: "^(.+\\.php)(/.+)$"
+          - include: "fastcgi_params"
+          - fastcgi_param: "SCRIPT_FILENAME $document_root$fastcgi_script_name"
+          - fastcgi_param: "PATH_INFO $fastcgi_path_info"
+          - fastcgi_param: "modHeadersAvailable true"
+          - fastcgi_param: "front_controller_active true"
+          - fastcgi_pass: "unix:/var/run/php/php7.0-fpm.sock"
+          - fastcgi_intercept_errors: "on"
+          - fastcgi_request_buffering: "off"
+
+      - url: "~ ^/(?:updater|ocs-provider)(?:$|/)"
+        directives:
+          - try_files: "$uri $uri/ =404"
+          - index: index.php
+
+      - url: "~* \\.(?:css|js|woff|svg|gif)"
+        directives:
+          - try_files: "$uri /index.php$uri$is_args$args"
+          - add_header: 'Cache-Control "public, max-age=15778463"'
+
+      - url: "~* \\.(?:png|html|ttf|ico|jpg|jpeg)$"
+        directives:
+          - try_files: "$uri /index.php$uri$is_args$args"

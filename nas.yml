@@ -33,7 +33,10 @@
 
   roles:
     - munin
-    - nginx
     - rygel
     - transmission
+    - postgresql
     - backupninja
+    - php
+    - nextcloud
+    - nginx
