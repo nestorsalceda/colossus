@@ -1,0 +1,19 @@
+---
+- name: install package
+  apt:
+    pkg={{ item }}
+    state=present
+  with_items:
+    - php
+    - php-fpm
+
+- name: install extra modules
+  apt:
+    pkg={{ item }}
+    state=present
+  with_items: "{{ php_extra_modules }}"
+
+- name: start php-fpm service
+  service:
+    name=php7.0-fpm
+    state=started
