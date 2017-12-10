@@ -1,0 +1,9 @@
+---
+nextcloud_prefix: /var/www
+nextcloud_home: "{{ nextcloud_prefix }}/nextcloud"
+nextcloud_data_dir: "{{ nextcloud_home }}/data"
+nextcloud_download_url: "https://download.nextcloud.com/server/releases/nextcloud-12.0.4.zip"
+
+nextcloud_db_name: "nextcloud"
+nextcloud_db_user: "nextcloud"
+nextcloud_db_password: "nextcloud"

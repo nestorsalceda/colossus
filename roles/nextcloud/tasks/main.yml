@@ -1,0 +1,34 @@
+---
+- name: create database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name={{ nextcloud_db_name }}
+    state=present
+
+- name: create database user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    db={{ nextcloud_db_name }}
+    name={{ nextcloud_db_user }}
+    encrypted=true
+    password={{ nextcloud_db_password }}
+    state=present
+
+- name: download
+  unarchive:
+    src={{ nextcloud_download_url }}
+    dest={{ nextcloud_prefix }}
+    owner=www-data
+    group=www-data
+    creates="{{ nextcloud_home }}/index.php"
+    copy=no
+
+- name: create data directory
+  file:
+    path={{ nextcloud_data_dir }}
+    owner=www-data
+    group=www-data
+    mode="0770"
+    state=directory
